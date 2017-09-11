@@ -1,0 +1,25 @@
+html, body {
+  margin: 0;
+  height: 100%;
+}
+
+.bar {
+    fill: #0080FF
+}
+
+.bar:hover {
+    fill: red
+}
+
+.linez:hover {
+    stroke: red
+}
+
+.axis text {
+    font-family: Lato;
+    font-size: 13px;
+}
+
+.text {
+    font-family: sans-serif
+}
