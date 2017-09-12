@@ -87,7 +87,10 @@ function create_graph(data) {
             .attr("stroke-width", 2)
             .attr("fill", "none")
             .on("click", function() {
-                alert("clicked"); }
+                d3.json("testdata2.json", function(d) {
+                    create_graph(d); }
+                       );
+            }
                );
     }
  }
