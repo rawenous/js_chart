@@ -2,14 +2,29 @@
     "graphs" : [
         {
             "name" : "Total Drops",
-
+            "columns": [
+                "query",
+                "drill_down_graph"
+            ],
             "queries": [
-                
+                [
+                    "./testdata.json",
+                    "ppb drops"
+                ]
+            ]
+        },
+        {
+            "name" : "ppb drops",
+            "columns": [
+                "query",
+                "drill_down_graph"
+            ],
+            "queries": [
+                [
+                    "./testdata2.json",
+                    ""
+                ]
             ]
         }
-
-
     ]
-
-
 }

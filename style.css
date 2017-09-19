@@ -3,21 +3,13 @@ html, body {
   height: 100%;
 }
 
-.bar {
-    fill: #0080FF
-}
 
-.bar:hover {
-    fill: red
-}
+/* .line_$:hover { */
+/*     stroke: red */
+/* } */
 
-.linez:hover {
+[id^='line_']:hover {
     stroke: red
-}
-
-.axis text {
-    font-family: Lato;
-    font-size: 13px;
 }
 
 .text {
@@ -26,15 +18,10 @@ html, body {
 
 .axis text
 {
-    fill: #333;
     font-family: sans-serif;
-    font-size: 10px;
+    font-size: 13px;
 }
 .axis .domain
 {
     opacity: 0;
-}
-.tick
-{
-    stroke: #ccc;
 }
