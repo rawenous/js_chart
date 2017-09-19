@@ -29,7 +29,6 @@ function LineChart() {
     this._WIDTH = 600;
     this._HEIGHT = 270;
 
-
     // // Set the ranges
     this._xScale = d3.scaleTime().range([this._MARGINS.left, this._WIDTH - this._MARGINS.right]);
     this._yScale = d3.scaleLinear().range([this._HEIGHT - this._MARGINS.top, this._MARGINS.bottom]);
@@ -62,7 +61,13 @@ function LineChart() {
             .attr("width", this._WIDTH)
             .attr("height", this._HEIGHT);
 
-          
+        // Add chart text description
+        vis.append("text")
+            .attr("x", _this._WIDTH/2)
+            .attr("y", _this._MARGINS.top)
+            .text(graphInfo.name)
+            .attr("font-size", "13px")
+            .attr("text-anchor", "top");
 
         var myXscale = this._xScale;
         var myYscale = this._yScale;
@@ -126,13 +131,13 @@ function LineChart() {
 
             // Add the X Axis
             vis.append("g")
-                .attr("class", "x.axis")
+                .attr("class", "x_axis")
                 .attr("transform", "translate(0," + (_this._HEIGHT - _this._MARGINS.bottom) + ")")
                 .call(_this._xAxis);
 
             // Add the Y Axis
             vis.append("g")
-                .attr("class", "y.axis")
+                .attr("class", "y_axis")
                 .attr("transform", "translate(" + (_this._MARGINS.left) + ",0)")
                 .call(_this._yAxis);
         });
@@ -167,7 +172,6 @@ function LineChart() {
                                 if (maxValue < value) {
                                     maxValue = value;
                                 }
-
                             }
                         }
 
@@ -177,9 +181,28 @@ function LineChart() {
                         _this._xScale.domain([minDate, maxDate]);
                         _this._yScale.domain([0, maxValue]);
 
+                        // Save current chart name
+                        currentChartName = d3.select("." + id).select("text")
+                            .html();
+
+                        // And override with new chart name
+                        d3.select("." + id).select("text")
+                            .text(subChartName);
+
                         // Select the section we want to apply our changes to
                         // TODO: Why didn't select by id work?
-                        var svg = d3.select("." + id).transition().duration(750);
+                        var svg = d3.select("." + id);//.transition().duration(750);
+
+                        // Add circle that goes back when you click it
+                        var svg_back = d3.select("." + id).append("circle")
+                            .attr("r", 10)
+                            .attr("cx", _this._WIDTH - _this._MARGINS.right)
+                            .attr("cy", _this._MARGINS.top)
+                            .attr("fill", "purple")
+                            .on("click", function(d) {
+                                _this.updateData(currentChartName, allGraphs, id);
+                                d3.select(this).remove();
+                            });
 
                         // console.log("svg: " + svg);
                         // console.log("id: "+ id);
@@ -187,8 +210,17 @@ function LineChart() {
 
                         // Add the valueline path.
                         for (var k = 0; k < graphData.length; k++) {
-                            //console.log(graphData[k].values);
+
+                            // Add the drilldown functionality for this chart
                             svg.select(".line_" + k)
+                                .on("click", function() {
+                                    // Second item in queries is the subchart for this line
+                                    _this.updateData(graphData.queries[0][1], allGraphs, id);
+                                });
+
+                            svg.select(".line_" + k)
+                                .transition()
+                                .duration(750)
                                 .attr("d", _this.lineGen(graphData[k].values))
                                 .attr("stroke", function() {
                                     return lineColor(k);
@@ -196,12 +228,13 @@ function LineChart() {
                                 .attr("stroke-width", 2)
                                 .attr("fill", "none");
 
-                            // TODO: alter this functions drill down chart?
-                            // TODO: Back button?
-
-                            svg.select(".x.axis") // change the x axis
+                            svg.select(".x_axis") // change the x axis
+                                .transition()
+                                .duration(750)
                                 .call(_this._xAxis);
-                            svg.select(".y.axis") // change the y axis
+                            svg.select(".y_axis") // change the y axis
+                                .transition()
+                                .duration(750)
                                 .call(_this._yAxis);
 
                         }
