@@ -2,28 +2,29 @@
     "graphs" : [
         {
             "name" : "Total Drops",
-            "columns": [
-                "query",
-                "drill_down_graph"
-            ],
+            "id" : 0,
             "queries": [
-                [
-                    "./testdata.json",
-                    "ppb drops"
-                ]
+                {
+                    "measuerment" : "drop_counters",
+                    "field_key"   : "Downlink_drops",
+                    "drilldown"   : "ppb drops"
+                },
+                {
+                    "measuerment" : "drop_counters",
+                    "field_key"   : "Uplink_drops",
+                    "drilldown"   : ""
+                }
             ]
         },
         {
             "name" : "ppb drops",
-            "columns": [
-                "query",
-                "drill_down_graph"
-            ],
+            "id" : 1,
             "queries": [
-                [
-                    "./testdata2.json",
-                    ""
-                ]
+                {
+                    "measuerment" : "drop_counters",
+                    "field_key"   : "Transport_drops",
+                    "drilldown"   : ""
+                }
             ]
         }
     ]
