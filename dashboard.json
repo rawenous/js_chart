@@ -23,7 +23,7 @@
                 {
                     "measuerment" : "drop_counters",
                     "field_key"   : "Transport_drops",
-                    "drilldown"   : ""
+                    "drilldown"   : "Total Drops"
                 }
             ]
         }
